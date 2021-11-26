@@ -47,7 +47,13 @@ FetchContent_MakeAvailable(fmt)
 # ------------------------------------------------------------------------------
 # Create executable
 # ------------------------------------------------------------------------------
-add_executable(aoc_2021_app "src/main.cpp")
+add_executable(aoc_2021_app "src/main.cpp" "src/utility/math.h" "src/utility/math.cpp" "src/utility/string.h" "src/utility/string.cpp" "src/utility/io.h" "src/utility/io.cpp" "src/utility/day.h" "src/day_1/day_1.h" "src/day_1/day_1.cpp" )
+
+target_include_directories(aoc_2021_app
+    PRIVATE
+        "src/"
+)
+
 target_link_libraries(aoc_2021_app
     PRIVATE
         project_options
