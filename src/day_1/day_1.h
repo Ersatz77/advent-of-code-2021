@@ -4,6 +4,7 @@
 #include "utility/day.h"
 
 #include <filesystem>
+#include <string>
 
 namespace aoc
 {
