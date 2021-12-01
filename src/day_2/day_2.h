@@ -12,7 +12,6 @@ namespace aoc
 	{
 	public:
 		Day_2() = default;
-		~Day_2() = default;
 		const std::string part_1(const std::filesystem::path& input_path) const override;
 		const std::string part_2(const std::filesystem::path& input_path) const override;
 	};

@@ -10,6 +10,7 @@ namespace aoc
 	class Day
 	{
 	public:
+		Day() = default;
 		virtual ~Day() = default;
 		virtual const std::string part_1(const std::filesystem::path& input_path) const = 0;
 		virtual const std::string part_2(const std::filesystem::path& input_path) const = 0;
