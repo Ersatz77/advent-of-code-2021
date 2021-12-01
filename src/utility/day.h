@@ -11,8 +11,8 @@ namespace aoc
 	{
 	public:
 		virtual ~Day() = default;
-		virtual const std::string part_1(const std::filesystem::path& path) const = 0;
-		virtual const std::string part_2(const std::filesystem::path& path) const = 0;
+		virtual const std::string part_1(const std::filesystem::path& input_path) const = 0;
+		virtual const std::string part_2(const std::filesystem::path& input_path) const = 0;
 	};
 
 } // aoc

@@ -1,5 +1,5 @@
-#ifndef AOC_2021_DAY_1_H
-#define AOC_2021_DAY_1_H
+#ifndef AOC_2021_DAY_2_H
+#define AOC_2021_DAY_2_H
 
 #include "utility/day.h"
 
@@ -8,15 +8,15 @@
 
 namespace aoc
 {
-	class Day_1 : public Day
+	class Day_2 : public Day
 	{
 	public:
-		Day_1() = default;
-		~Day_1() = default;
+		Day_2() = default;
+		~Day_2() = default;
 		const std::string part_1(const std::filesystem::path& input_path) const override;
 		const std::string part_2(const std::filesystem::path& input_path) const override;
 	};
 
 } // aoc
 
-#endif // !AOC_2021_DAY_1_H
+#endif // !AOC_2021_DAY_2_H
