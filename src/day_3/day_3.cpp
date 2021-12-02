@@ -20,4 +20,5 @@ namespace aoc
 	{
 		return fmt::format("Day 3 Part 2 | {}", input_path.filename().string());
 	}
-}
+
+} // aoc
