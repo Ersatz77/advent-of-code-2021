@@ -12,14 +12,12 @@
 
 namespace aoc
 {
-	static std::vector<int> parse_input(const std::filesystem::path& path)
+	std::vector<int> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 		std::vector<int> numbers;
-		while (file)
+		for (int number = 0; file >> number; )
 		{
-			int number = 0;
-			file >> number;
 			numbers.push_back(number);
 		}
 

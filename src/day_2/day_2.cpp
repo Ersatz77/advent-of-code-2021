@@ -21,17 +21,15 @@ namespace aoc
 		UNKNOWN
 	};
 
-	static std::vector<std::pair<Direction, int>> parse_input(const std::filesystem::path& path)
+	std::vector<std::pair<Direction, int>> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 
 		std::vector<std::pair<Direction, int>> directions;
-		while (file)
+		std::string direction_str;
+		int amount = 0;
+		while (file >> direction_str >> amount)
 		{
-			std::string direction_str;
-			int amount = 0;
-			file >> direction_str >> amount;
-
 			Direction direction = Direction::UNKNOWN;
 			if (direction_str == "forward")
 			{
