@@ -57,7 +57,7 @@ namespace aoc
 			else
 				common = results[0] <= results[1] ? 0 : 1;
 
-			// Remove number from vector if they aren't valid
+			// Remove invalid numbers from the vector
 			binary_numbers.erase(std::remove_if(binary_numbers.begin(), binary_numbers.end(),
 				[i, common](const auto& bin) { return (bin & (1 << i)) >> i != common; }), binary_numbers.end());
 		}
