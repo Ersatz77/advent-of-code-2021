@@ -71,7 +71,7 @@ namespace aoc
 
 		// We only need to find the gamma rate because the epsilon rate is just the inverse
 		uint32_t gamma_rate = 0;
-		for (size_t i = 0; i < num_bits; ++i)
+		for (uint32_t i = 0; i < num_bits; ++i)
 		{
 			std::array<size_t, 2> results = num_zeros_and_ones(numbers, i);
 			if (results[0] < results[1])
