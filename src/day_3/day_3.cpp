@@ -45,31 +45,24 @@ namespace aoc
 		return { zeros, ones };
 	}
 
-	uint32_t life_support_rating(const std::vector<uint32_t>& binary_numbers, const bool most_common)
+	uint32_t life_support_rating(std::vector<uint32_t> binary_numbers, const bool most_common)
 	{
-		std::vector<uint32_t> valid_numbers = binary_numbers;
-		for (int32_t i = num_bits - 1; i >= 0; --i)
+		for (int32_t i = num_bits - 1; i >= 0 && binary_numbers.size() > 1; --i)
 		{
-			// Break out of loop if one number is left
-			if (valid_numbers.size() == 1)
-				break;
-
 			// Find the most common bit
-			std::array<size_t, 2> results = num_zeros_and_ones(valid_numbers, i);
+			std::array<size_t, 2> results = num_zeros_and_ones(binary_numbers, i);
 			uint32_t common = 0;
 			if (most_common)
 				common = results[0] <= results[1] ? 1 : 0;
 			else
 				common = results[0] <= results[1] ? 0 : 1;
 
-			// Copy all new valid numbers to a temp vector then override the vector with previously valid numbers
-			std::vector<uint32_t> temp_valid_numbers;
-			std::copy_if(valid_numbers.begin(), valid_numbers.end(), std::back_inserter(temp_valid_numbers),
-				[i, common](const auto& bin) { return (bin & (1 << i)) >> i == common; });
-			valid_numbers = std::move(temp_valid_numbers);
+			// Remove number from vector if they aren't valid
+			binary_numbers.erase(std::remove_if(binary_numbers.begin(), binary_numbers.end(),
+				[i, common](const auto& bin) { return (bin & (1 << i)) >> i != common; }), binary_numbers.end());
 		}
 
-		return valid_numbers.front();
+		return binary_numbers.front();
 	}
 
 	const std::string Day_3::part_1(const std::filesystem::path& input_path) const
@@ -85,7 +78,7 @@ namespace aoc
 				gamma_rate |= 1 << i;
 		}
 
-		return fmt::format("Day 3 Part 1 | Power consumption: {}", gamma_rate * (gamma_rate ^ 0x0FFF));
+		return fmt::format("Day 3 Part 1 | Power consumption: {}", gamma_rate * (gamma_rate ^ 0x00000FFF));
 	}
 
 	const std::string Day_3::part_2(const std::filesystem::path& input_path) const
