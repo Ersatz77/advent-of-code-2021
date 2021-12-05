@@ -10,7 +10,6 @@
 #include <sstream>
 #include <filesystem>
 #include <algorithm>
-#include <vector>
 #include <string>
 
 namespace aoc
