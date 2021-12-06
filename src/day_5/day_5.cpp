@@ -65,9 +65,11 @@ namespace aoc
 		return points;
 	}
 
-	void parse_input_part_1(const std::filesystem::path& path, int* const grid)
+	int* parse_input_part_1(const std::filesystem::path& path, const size_t width, const size_t height)
 	{
 		std::ifstream file = open_file(path);
+
+		int* grid = new int[width * height]();
 		std::string line;
 		std::string junk;
 		char junk_ch = ' ';
@@ -84,15 +86,19 @@ namespace aoc
 			{
 				for (auto& p : get_points(x1, y1, x2, y2))
 				{
-					++grid[(p.y * grid_width) + p.x];
+					++grid[(p.y * width) + p.x];
 				}
 			}
 		}
+
+		return grid;
 	}
 
-	void parse_input_part_2(const std::filesystem::path& path, int* const grid)
+	int* parse_input_part_2(const std::filesystem::path& path, const size_t width, const size_t height)
 	{
 		std::ifstream file = open_file(path);
+
+		int* grid = new int[width * height]();
 		std::string line;
 		std::string junk;
 		char junk_ch = ' ';
@@ -107,15 +113,17 @@ namespace aoc
 
 			for (auto& p : get_points(x1, y1, x2, y2))
 			{
-				++grid[(p.y * grid_width) + p.x];
+				++grid[(p.y * width) + p.x];
 			}
 		}
+
+		return grid;
 	}
 
-	size_t num_overlaps(int const * const grid)
+	size_t num_overlaps(int const * const grid, const size_t width, const size_t height)
 	{
 		size_t overlaps = 0;
-		for (size_t i = 0; i < grid_width * grid_height; ++i)
+		for (size_t i = 0; i < width * height; ++i)
 		{
 			if (grid[i] >= 2)
 			{
@@ -128,10 +136,8 @@ namespace aoc
 
 	const std::string Day_5::part_1(const std::filesystem::path& input_path) const
 	{
-		int* grid = new int[grid_width * grid_height]();
-
-		parse_input_part_1(input_path / "day_5.txt", grid);
-		size_t overlaps = num_overlaps(grid);
+		int* grid = parse_input_part_1(input_path / "day_5.txt", grid_width, grid_height);
+		size_t overlaps = num_overlaps(grid, grid_width, grid_height);
 
 		delete[] grid;
 		return fmt::format("Day 5 Part 1 | Overlaps: {}", overlaps);
@@ -139,10 +145,8 @@ namespace aoc
 
 	const std::string Day_5::part_2(const std::filesystem::path& input_path) const
 	{
-		int* grid = new int[grid_width * grid_height]();
-
-		parse_input_part_2(input_path / "day_5.txt", grid);
-		size_t overlaps = num_overlaps(grid);
+		int* grid = parse_input_part_2(input_path / "day_5.txt", grid_width, grid_height);
+		size_t overlaps = num_overlaps(grid, grid_width, grid_height);
 
 		delete[] grid;
 		return fmt::format("Day 5 Part 2 | Overlaps: {}", overlaps);
