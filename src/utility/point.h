@@ -30,4 +30,4 @@ namespace std
 
 } // std
 
-#endif // !AOC_2021_DAY_5_POINT_H
+#endif // !AOC_2021_UTILITY_POINT_H
