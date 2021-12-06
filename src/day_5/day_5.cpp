@@ -84,7 +84,7 @@ namespace aoc
 			{
 				for (auto& p : get_points(x1, y1, x2, y2))
 				{
-					++grid[(p.y * grid_height) + p.x];
+					++grid[(p.y * grid_width) + p.x];
 				}
 			}
 		}
@@ -107,7 +107,7 @@ namespace aoc
 
 			for (auto& p : get_points(x1, y1, x2, y2))
 			{
-				++grid[(p.y * grid_height) + p.x];
+				++grid[(p.y * grid_width) + p.x];
 			}
 		}
 	}
