@@ -1,4 +1,4 @@
-#include "day_5/point.h"
+#include "utility/point.h"
 
 namespace aoc
 {

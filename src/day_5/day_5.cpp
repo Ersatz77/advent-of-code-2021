@@ -1,7 +1,7 @@
 #include "day_5/day_5.h"
 
-#include "day_5/point.h"
 #include "utility/io.h"
+#include "utility/point.h"
 
 #include "fmt/format.h"
 
@@ -9,14 +9,15 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
-#include <algorithm>
 #include <cmath>
 #include <string>
 #include <vector>
-#include <unordered_map>
 
 namespace aoc
 {
+	constexpr size_t grid_width = 1000;
+	constexpr size_t grid_height = 1000;
+
 	int sign(int val)
 	{
 		if (val > 0)
@@ -64,11 +65,9 @@ namespace aoc
 		return points;
 	}
 
-	std::unordered_map<Point, size_t> parse_input_part_1(const std::filesystem::path& path)
+	void parse_input_part_1(const std::filesystem::path& path, int* const grid)
 	{
 		std::ifstream file = open_file(path);
-
-		std::unordered_map<Point, size_t> points;
 		std::string line;
 		std::string junk;
 		char junk_ch = ' ';
@@ -85,19 +84,15 @@ namespace aoc
 			{
 				for (auto& p : get_points(x1, y1, x2, y2))
 				{
-					points[p] += 1;
+					++grid[(p.y * grid_height) + p.x];
 				}
 			}
 		}
-
-		return points;
 	}
 
-	std::unordered_map<Point, size_t> parse_input_part_2(const std::filesystem::path& path)
+	void parse_input_part_2(const std::filesystem::path& path, int* const grid)
 	{
 		std::ifstream file = open_file(path);
-
-		std::unordered_map<Point, size_t> points;
 		std::string line;
 		std::string junk;
 		char junk_ch = ' ';
@@ -112,40 +107,44 @@ namespace aoc
 
 			for (auto& p : get_points(x1, y1, x2, y2))
 			{
-				points[p] += 1;
+				++grid[(p.y * grid_height) + p.x];
 			}
 		}
-
-		return points;
 	}
 
-	const std::string Day_5::part_1(const std::filesystem::path& input_path) const
+	size_t num_overlaps(int const * const grid)
 	{
-		std::unordered_map<Point, size_t> points = parse_input_part_1(input_path / "day_5.txt");
 		size_t overlaps = 0;
-		for (const auto& [key, value] : points)
+		for (size_t i = 0; i < grid_width * grid_height; ++i)
 		{
-			if (value >= 2)
+			if (grid[i] >= 2)
 			{
 				++overlaps;
 			}
 		}
 
+		return overlaps;
+	}
+
+	const std::string Day_5::part_1(const std::filesystem::path& input_path) const
+	{
+		int* grid = new int[grid_width * grid_height]();
+
+		parse_input_part_1(input_path / "day_5.txt", grid);
+		size_t overlaps = num_overlaps(grid);
+
+		delete[] grid;
 		return fmt::format("Day 5 Part 1 | Overlaps: {}", overlaps);
 	}
 
 	const std::string Day_5::part_2(const std::filesystem::path& input_path) const
 	{
-		std::unordered_map<Point, size_t> points = parse_input_part_2(input_path / "day_5.txt");
-		size_t overlaps = 0;
-		for (const auto& [key, value] : points)
-		{
-			if (value >= 2)
-			{
-				++overlaps;
-			}
-		}
+		int* grid = new int[grid_width * grid_height]();
 
+		parse_input_part_2(input_path / "day_5.txt", grid);
+		size_t overlaps = num_overlaps(grid);
+
+		delete[] grid;
 		return fmt::format("Day 5 Part 2 | Overlaps: {}", overlaps);
 	}
 

@@ -1,5 +1,5 @@
-#ifndef AOC_2021_DAY_5_POINT_H
-#define AOC_2021_DAY_5_POINT_H
+#ifndef AOC_2021_UTILITY_POINT_H
+#define AOC_2021_UTILITY_POINT_H
 
 #include <functional>
 
