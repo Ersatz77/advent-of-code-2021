@@ -5,6 +5,7 @@
 #include "day_5/day_5.h"
 #include "day_6/day_6.h"
 #include "day_7/day_7.h"
+#include "day_8/day_8.h"
 
 #include "fmt/format.h"
 
@@ -36,6 +37,7 @@ int main(int argc, char* argv[])
         solutions.push_back(new aoc::Day_5);
         solutions.push_back(new aoc::Day_6);
         solutions.push_back(new aoc::Day_7);
+        solutions.push_back(new aoc::Day_8);
 
         // Run solution for each day
         uint64_t total_runtime = 0;
