@@ -14,7 +14,7 @@
 
 namespace aoc
 {
-	std::array<size_t, 9> parse_input(const std::filesystem::path& path)
+	static std::array<size_t, 9> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 
@@ -28,7 +28,7 @@ namespace aoc
 		return fish;
 	}
 
-	std::array<size_t, 9> cycle_fish(std::array<size_t, 9> fish, const size_t cycles)
+	static std::array<size_t, 9> cycle_fish(std::array<size_t, 9> fish, const size_t cycles)
 	{
 		for (size_t i = 0; i < cycles; ++i)
 		{

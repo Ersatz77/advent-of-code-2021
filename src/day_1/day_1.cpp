@@ -12,7 +12,7 @@
 
 namespace aoc
 {
-	std::vector<int> parse_input(const std::filesystem::path& path)
+	static std::vector<int> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 		std::vector<int> numbers;

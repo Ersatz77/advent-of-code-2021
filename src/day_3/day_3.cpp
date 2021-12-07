@@ -17,7 +17,7 @@ namespace aoc
 {
 	constexpr uint32_t num_bits = 12;
 
-	std::vector<uint32_t> parse_input(const std::filesystem::path& path)
+	static std::vector<uint32_t> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 		std::vector<uint32_t> binary_numbers;
@@ -29,7 +29,7 @@ namespace aoc
 		return binary_numbers;
 	}
 
-	std::array<size_t, 2> num_zeros_and_ones(const std::vector<uint32_t>& binary_numbers, const size_t pos)
+	static std::array<size_t, 2> num_zeros_and_ones(const std::vector<uint32_t>& binary_numbers, const size_t pos)
 	{
 		size_t zeros = 0;
 		size_t ones = 0;
@@ -45,7 +45,7 @@ namespace aoc
 		return { zeros, ones };
 	}
 
-	uint32_t life_support_rating(std::vector<uint32_t> binary_numbers, const bool most_common)
+	static uint32_t life_support_rating(std::vector<uint32_t> binary_numbers, const bool most_common)
 	{
 		for (int32_t i = num_bits - 1; i >= 0 && binary_numbers.size() > 1; --i)
 		{

@@ -21,7 +21,7 @@ namespace aoc
 		UNKNOWN
 	};
 
-	std::vector<std::pair<Direction, int>> parse_input(const std::filesystem::path& path)
+	static std::vector<std::pair<Direction, int>> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
 

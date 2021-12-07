@@ -18,7 +18,7 @@ namespace aoc
 	constexpr size_t grid_width = 1000;
 	constexpr size_t grid_height = 1000;
 
-	int sign(int val)
+	static int sign(int val)
 	{
 		if (val > 0)
 		{
@@ -32,7 +32,7 @@ namespace aoc
 		return 0;
 	}
 
-	std::vector<Point> get_points(const int x1, const int y1, const int x2, const int y2)
+	static std::vector<Point> get_points(const int x1, const int y1, const int x2, const int y2)
 	{
 		std::vector<Point> points;
 		if (x1 == x2)
@@ -65,7 +65,7 @@ namespace aoc
 		return points;
 	}
 
-	int* parse_input_part_1(const std::filesystem::path& path, const size_t width, const size_t height)
+	static int* parse_input_part_1(const std::filesystem::path& path, const size_t width, const size_t height)
 	{
 		std::ifstream file = open_file(path);
 
@@ -94,7 +94,7 @@ namespace aoc
 		return grid;
 	}
 
-	int* parse_input_part_2(const std::filesystem::path& path, const size_t width, const size_t height)
+	static int* parse_input_part_2(const std::filesystem::path& path, const size_t width, const size_t height)
 	{
 		std::ifstream file = open_file(path);
 
@@ -120,7 +120,7 @@ namespace aoc
 		return grid;
 	}
 
-	size_t num_overlaps(int const * const grid, const size_t width, const size_t height)
+	static size_t num_overlaps(int const * const grid, const size_t width, const size_t height)
 	{
 		size_t overlaps = 0;
 		for (size_t i = 0; i < width * height; ++i)

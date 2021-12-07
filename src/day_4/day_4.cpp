@@ -14,7 +14,7 @@
 
 namespace aoc
 {
-	void parse_input(const std::filesystem::path& path, std::vector<int>& numbers, std::vector<Bingo_board>& boards)
+	static void parse_input(const std::filesystem::path& path, std::vector<int>& numbers, std::vector<Bingo_board>& boards)
 	{
 		std::ifstream file = open_file(path);
 		std::string line;
