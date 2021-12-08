@@ -2,6 +2,7 @@
 
 #include "day_8/digit.h"
 
+#include <iostream>
 #include <algorithm>
 #include <cstdint>
 #include <iterator>
