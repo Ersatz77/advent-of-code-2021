@@ -68,6 +68,24 @@ namespace aoc
 		return sum % product;
 	}
 
+	template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+	T pow(T base, T exp)
+	{
+		T result = 1;
+		while (exp)
+		{
+			if (exp % 2)
+			{
+				result *= base;
+			}
+
+			exp /= 2;
+			base *= base;
+		}
+
+		return result;
+	}
+
 } // aoc
 
 #endif // !AOC_2021_UTILITY_MATH_H
