@@ -81,8 +81,7 @@ namespace aoc
 		// 0, 2, 3, 5, 6, 9
 		for (const Digit& digit : m_unique)
 		{
-			if (std::find_if(mappings.begin(), mappings.end(),
-				[&digit](const Digit& d) { return d == digit; }) != mappings.end())
+			if (std::find_if(mappings.begin(), mappings.end(), [&digit](const Digit& d) { return d == digit; }) != mappings.end())
 			{
 				continue;
 			}
