@@ -74,7 +74,7 @@ namespace aoc
 		return count;
 	}
 
-	static int64_t get_mapping_value(const std::string& str, std::array<std::string, 10>& mappings)
+	static int64_t get_mapping_value(const std::string& str, const std::array<std::string, 10>& mappings)
 	{
 		const auto it = std::find(mappings.begin(), mappings.end(), str);
 		if (it == mappings.end())
@@ -184,7 +184,7 @@ namespace aoc
 		std::vector<Signal_entry> entries = parse_input(input_path / "day_8.txt");
 
 		int64_t sum = 0;
-		for (const Signal_entry& entry : entries)
+		for (const auto& entry : entries)
 		{
 			std::array<std::string, 10> mappings = create_mappings(entry.patterns);
 			std::array<int64_t, 4> output = {};
