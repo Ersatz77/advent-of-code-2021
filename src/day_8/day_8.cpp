@@ -74,7 +74,7 @@ namespace aoc
 		return count;
 	}
 
-	static int64_t get_mapping_value(const std::string& str, std::array<std::string, 10> mappings)
+	static int64_t get_mapping_value(const std::string& str, std::array<std::string, 10>& mappings)
 	{
 		const auto it = std::find(mappings.begin(), mappings.end(), str);
 		if (it == mappings.end())
