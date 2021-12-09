@@ -50,8 +50,7 @@ namespace aoc
 		{
 			for (Bingo_board& board : boards)
 			{
-				board.mark_square(numbers[i]);
-				if (board.winner())
+				if (board.mark_square(numbers[i]))
 				{
 					winning_board_score = numbers[i] * board.sum_of_unmarked();
 					found_winner = true;
@@ -75,8 +74,7 @@ namespace aoc
 			std::vector<Bingo_board> temp_boards;
 			for (Bingo_board& board : boards)
 			{
-				board.mark_square(numbers[i]);
-				if (board.winner())
+				if (board.mark_square(numbers[i]))
 				{
 					last_winning_board_score = numbers[i] * board.sum_of_unmarked();
 				}

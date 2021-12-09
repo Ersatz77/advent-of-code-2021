@@ -17,8 +17,7 @@ namespace aoc
 	public:
 		Bingo_board() = default;
 
-		void mark_square(const int number);
-		bool winner() const;
+		bool mark_square(const int number);
 		int sum_of_unmarked() const;
 
 		friend std::istream& operator>>(std::istream& is, Bingo_board& board);

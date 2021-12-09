@@ -8,7 +8,7 @@
 
 namespace aoc
 {
-	void Bingo_board::mark_square(const int number)
+	bool Bingo_board::mark_square(const int number)
 	{
 		for (size_t row = 0; row < m_squares.size(); ++row)
 		{
@@ -17,19 +17,8 @@ namespace aoc
 				if (m_squares[row][column].number == number)
 				{
 					m_squares[row][column].marked = true;
-					return;
+					return winning_row(row) || winning_column(column);
 				}
-			}
-		}
-	}
-
-	bool Bingo_board::winner() const
-	{
-		for (size_t i = 0; i < m_squares.size(); ++i)
-		{
-			if (winning_row(i) || winning_column(i))
-			{
-				return true;
 			}
 		}
 
