@@ -60,6 +60,11 @@ namespace aoc
 		for (size_t i = 1; i < offsets.size(); i += 2)
 		{
 			int8_t adjacent = value_at_pos(x + offsets[i - 1], y + offsets[i], height_map);
+			if (adjacent == -1)
+			{
+				continue;
+			}
+
 			if (center >= adjacent)
 			{
 				return false;
