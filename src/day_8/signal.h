@@ -21,7 +21,6 @@ namespace aoc
 
 	private:
 		std::array<Digit, 10> create_mappings() const;
-		size_t get_mapping_index(const Digit& mapping, const std::array<Digit, 10>& mappings) const;
 
 		std::array<Digit, 10> m_unique = {};
 		std::array<Digit, 4> m_output = {};

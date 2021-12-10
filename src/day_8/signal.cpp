@@ -5,7 +5,6 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdint>
-#include <iterator>
 #include <array>
 #include <string>
 
@@ -38,11 +37,11 @@ namespace aoc
 		std::array<int64_t, 4> output = {};
 		for (size_t i = 0; i < m_output.size(); ++i)
 		{
-			for (const Digit& mapping : mappings)
+			for (size_t mapping_idx = 0; mapping_idx < mappings.size(); ++mapping_idx)
 			{
-				if (m_output[i] == mapping)
+				if (m_output[i] == mappings[mapping_idx])
 				{
-					output[i] = get_mapping_index(mapping, mappings);
+					output[i] = mapping_idx;
 					break;
 				}
 			}
@@ -125,17 +124,6 @@ namespace aoc
 		}
 
 		return mappings;
-	}
-
-	size_t Signal::get_mapping_index(const Digit& mapping, const std::array<Digit, 10>& mappings) const
-	{
-		const auto it = std::find_if(mappings.begin(), mappings.end(), [&mapping](const Digit& d) { return d == mapping; });
-		if (it == mappings.end())
-		{
-			return 11;
-		}
-
-		return std::distance(mappings.begin(), it);
 	}
 
 	std::istream& operator>>(std::istream& is, Signal& s)
