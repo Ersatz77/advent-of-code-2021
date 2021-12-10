@@ -12,17 +12,9 @@
 #include <string>
 #include <vector>
 #include <stack>
-#include <unordered_map>
 
 namespace aoc
 {
-	static const std::unordered_map<char, char> bracket_table = {
-		{'(', ')'},
-		{'[', ']'},
-		{'{', '}'},
-		{'<', '>'}
-	};
-
 	static std::vector<std::string> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
@@ -36,49 +28,123 @@ namespace aoc
 		return chunks;
 	}
 
-	static std::string create_ending(std::stack<char> brackets)
+	static int64_t score_corrupted(const std::string& chunk)
 	{
-		std::string ending;
+		std::stack<char> brackets;
+		for (const char c : chunk)
+		{
+			switch (c)
+			{
+			case '(':
+			case '[':
+			case '{':
+			case '<':
+				brackets.push(c);
+				break;
+			case ')':
+				if (brackets.empty() || brackets.top() != '(')
+					return 3;
+				brackets.pop();
+				break;
+			case ']':
+				if (brackets.empty() || brackets.top() != '[')
+					return 57;
+				brackets.pop();
+				break;
+			case '}':
+				if (brackets.empty() || brackets.top() != '{')
+					return 1197;
+				brackets.pop();
+				break;
+			case '>':
+				if (brackets.empty() || brackets.top() != '<')
+					return 25137;
+				brackets.pop();
+				break;
+			default:
+				break;
+			}
+		}
+
+		return 0;
+	}
+
+	static int64_t score_incomplete(const std::string& chunk)
+	{
+		std::stack<char> brackets;
+		for (const char c : chunk)
+		{
+			switch (c)
+			{
+			case '(':
+			case '[':
+			case '{':
+			case '<':
+				brackets.push(c);
+				break;
+			case ')':
+				if (brackets.empty() || brackets.top() != '(')
+					return 0;
+				brackets.pop();
+				break;
+			case ']':
+				if (brackets.empty() || brackets.top() != '[')
+					return 0;
+				brackets.pop();
+				break;
+			case '}':
+				if (brackets.empty() || brackets.top() != '{')
+					return 0;
+				brackets.pop();
+				break;
+			case '>':
+				if (brackets.empty() || brackets.top() != '<')
+					return 0;
+				brackets.pop();
+				break;
+			default:
+				break;
+			}
+		}
+
+		int64_t score = 0;
 		while (!brackets.empty())
 		{
-			ending += bracket_table.at(brackets.top());
+			score *= 5;
+			switch (brackets.top())
+			{
+			case '(':
+				score += 1;
+				break;
+			case '[':
+				score += 2;
+				break;
+			case '{':
+				score += 3;
+				break;
+			case '<':
+				score += 4;
+				break;
+			default:
+				break;
+			}
+
 			brackets.pop();
 		}
 
-		return ending;
+		return score;
 	}
 
 	const std::string Day_10::part_1(const std::filesystem::path& input_path) const
 	{
 		std::vector<std::string> chunks = parse_input(input_path / "day_10.txt");
 
-		// Get all invalid closing brackets
-		std::vector<char> invalids;
+		// Score corrupted chunks
+		int64_t score = 0;
 		for (const std::string& chunk : chunks)
 		{
-			std::stack<char> brackets;
-			for (const char c : chunk)
-			{
-				if (bracket_table.count(c) > 0)
-				{
-					brackets.push(c);
-					continue;
-				}
-
-				if (c != bracket_table.at(brackets.top()))
-				{
-					invalids.push_back(c);
-					break;
-				}
-
-				brackets.pop();
-			}
+			score += score_corrupted(chunk);
 		}
-
-		int64_t score = std::count(invalids.begin(), invalids.end(), ')') * 3;
-		score += std::count(invalids.begin(), invalids.end(), ']') * 57;
-		score += std::count(invalids.begin(), invalids.end(), '}') * 1197;
-		score += std::count(invalids.begin(), invalids.end(), '>') * 25137;
 
 		return fmt::format("Day 10 Part 1 | Corrupted score: {}", score);
 	}
@@ -87,62 +153,20 @@ namespace aoc
 	{
 		std::vector<std::string> chunks = parse_input(input_path / "day_10.txt");
 
-		// Find incomplete chunks and score them
-		std::vector<int64_t> ending_scores;
+		// Score incomplete chunks
+		std::vector<int64_t> incomplete_scores;
 		for (const std::string& chunk : chunks)
 		{
-			bool is_corrupted = false;
-			std::stack<char> brackets;
-			for (const char c : chunk)
+			int64_t score = score_incomplete(chunk);
+			if (score != 0)
 			{
-				if (bracket_table.count(c) > 0)
-				{
-					brackets.push(c);
-					continue;
-				}
-
-				if (c != bracket_table.at(brackets.top()))
-				{
-					is_corrupted = true;
-					break;
-				}
-
-				brackets.pop();
-			}
-
-			// Score incomplete chunks
-			if (!is_corrupted)
-			{
-				int64_t score = 0;
-				for (const char c : create_ending(brackets))
-				{
-					score *= 5;
-					switch (c)
-					{
-					case ')':
-						score += 1;
-						break;
-					case ']':
-						score += 2;
-						break;
-					case '}':
-						score += 3;
-						break;
-					case '>':
-						score += 4;
-						break;
-					default:
-						break;
-					}
-				}
-
-				ending_scores.push_back(score);
+				incomplete_scores.push_back(score);
 			}
 		}
 
-		std::sort(ending_scores.begin(), ending_scores.end());
+		std::sort(incomplete_scores.begin(), incomplete_scores.end());
 
-		return fmt::format("Day 10 Part 2 | Middle ending score: {}", ending_scores[ending_scores.size() / 2]);
+		return fmt::format("Day 10 Part 2 | Middle incomplete score: {}", incomplete_scores[incomplete_scores.size() / 2]);
 	}
 
 } // aoc
