@@ -96,24 +96,6 @@ namespace aoc
 		return num_flashes;
 	}
 
-	static bool synced_grid(const std::array<std::array<int, 10>, 10>& grid)
-	{
-		size_t height = grid.size();
-		size_t width = grid.front().size();
-		for (int y = 0; y < height; ++y)
-		{
-			for (int x = 0; x < width; ++x)
-			{
-				if (grid[y][x] != 0)
-				{
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-
 	const std::string Day_11::part_1(const std::filesystem::path& input_path) const
 	{
 		std::array<std::array<int, 10>, 10> grid = parse_input(input_path / "day_11.txt");
@@ -134,8 +116,7 @@ namespace aoc
 		size_t iteration = 1;
 		while (true)
 		{
-			step(grid);
-			if (synced_grid(grid))
+			if (step(grid) == 100)
 			{
 				break;
 			}
