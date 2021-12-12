@@ -31,7 +31,7 @@ namespace aoc
 	}
 
 	static int path(const std::unordered_map<std::string, std::vector<std::string>>& caves,
-		std::unordered_set<std::string>& visited, const std::string& current_cave, const bool part_2 = false)
+		std::unordered_set<std::string>& visited_small_caves, const std::string& current_cave, const bool part_2 = false)
 	{
 		if (current_cave == "end")
 			return 1;
@@ -39,24 +39,24 @@ namespace aoc
 		int paths = 0;
 		for (const std::string& adj : caves.at(current_cave))
 		{
-			if (!visited.contains(adj))
+			// Current adjacent cave is a large so we don't need to do anything special
+			if (is_upper(adj))
 			{
-				bool small_cave = is_lower(adj);
-				if (small_cave)
-				{
-					visited.insert(adj);
-				}
+				paths += path(caves, visited_small_caves, adj, part_2);
+				continue;
+			}
 
-				paths += path(caves, visited, adj, part_2);
-
-				if (small_cave)
-				{
-					visited.erase(adj);
-				}
+			// Current adjacent cave is a small cave
+			// Small caves can only be visited once and are added to the 'visited' set
+			if (!visited_small_caves.contains(adj))
+			{
+				visited_small_caves.insert(adj);
+				paths += path(caves, visited_small_caves, adj, part_2);
+				visited_small_caves.erase(adj);
 			}
 			else if (part_2 && adj != "start")
 			{
-				paths += path(caves, visited, adj, false);
+				paths += path(caves, visited_small_caves, adj, false);
 			}
 		}
 
@@ -66,15 +66,15 @@ namespace aoc
 	const std::string Day_12::part_1(const std::filesystem::path& input_path) const
 	{
 		std::unordered_map<std::string, std::vector<std::string>> caves = parse_input(input_path / "day_12.txt");
-		std::unordered_set<std::string> visited = { "start" };
-		return fmt::format("Day 12 Part 1 | Paths: {}", path(caves, visited, "start"));
+		std::unordered_set<std::string> visited_small_caves = { "start" };
+		return fmt::format("Day 12 Part 1 | Paths: {}", path(caves, visited_small_caves, "start"));
 	}
 
 	const std::string Day_12::part_2(const std::filesystem::path& input_path) const
 	{
 		std::unordered_map<std::string, std::vector<std::string>> caves = parse_input(input_path / "day_12.txt");
-		std::unordered_set<std::string> visited = { "start" };
-		return fmt::format("Day 12 Part 2 | Paths: {}", path(caves, visited, "start", true));
+		std::unordered_set<std::string> visited_small_caves = { "start" };
+		return fmt::format("Day 12 Part 2 | Paths: {}", path(caves, visited_small_caves, "start", true));
 	}
 
 } // aoc
