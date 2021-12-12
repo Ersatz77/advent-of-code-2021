@@ -12,6 +12,12 @@ namespace aoc
 	// Split a string using regex
 	std::vector<std::string> regex_split(const std::string& str, const std::string& pattern);
 
+	// Returns true if the whole string is lowercase
+	bool is_lower(const std::string& str);
+
+	// Returns true if the whole string is uppercase
+	bool is_upper(const std::string& str);
+
 } // aoc
 
 #endif // !AOC_2021_UTILITY_STRING_H
