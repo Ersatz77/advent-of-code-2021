@@ -47,7 +47,7 @@ namespace aoc
 			}
 
 			// Current adjacent cave is a small cave
-			// Small caves can only be visited once and are added to the 'visited' set
+			// Small caves can only be visited once and are added to the 'visited_small_caves' set
 			if (!visited_small_caves.contains(adj))
 			{
 				visited_small_caves.insert(adj);
