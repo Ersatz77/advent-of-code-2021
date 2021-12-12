@@ -41,14 +41,15 @@ namespace aoc
 		{
 			if (!visited.contains(adj))
 			{
-				if (is_lower(adj))
+				bool small_cave = is_lower(adj);
+				if (small_cave)
 				{
 					visited.insert(adj);
 				}
 
 				paths += path(caves, visited, adj, part_2);
 
-				if (is_lower(adj))
+				if (small_cave)
 				{
 					visited.erase(adj);
 				}
