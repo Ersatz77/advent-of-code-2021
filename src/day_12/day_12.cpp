@@ -19,62 +19,44 @@ namespace aoc
 	{
 		std::ifstream file = open_file(path);
 
-		std::unordered_map<std::string, std::vector<std::string>> nodes;
-		for (std::string line; std::getline(file, line); )
+		std::unordered_map<std::string, std::vector<std::string>> caves;
+		for (std::string connection; std::getline(file, connection); )
 		{
-			std::vector<std::string> ab = split(line, '-');
-			nodes[ab.front()].emplace_back(ab.back());
-			nodes[ab.back()].emplace_back(ab.front());
+			std::vector<std::string> cave_connection = split(connection, '-');
+			caves[cave_connection.front()].emplace_back(cave_connection.back());
+			caves[cave_connection.back()].emplace_back(cave_connection.front());
 		}
 
-		return nodes;
+		return caves;
 	}
 
-	static int path_p1(const std::unordered_map<std::string, std::vector<std::string>>& nodes, 
-		const std::string& current, std::unordered_set<std::string> visited = {})
+	static int path(const std::unordered_map<std::string, std::vector<std::string>>& caves,
+		std::unordered_set<std::string>& visited, const std::string& current_cave, const bool part_2 = false)
 	{
-		if (current == "end")
+		if (current_cave == "end")
 			return 1;
 
-		if (is_lower(current) && visited.count(current) > 0)
-			return 0;
-
 		int paths = 0;
-		visited.insert(current);
-		for (const std::string& node : nodes.at(current))
+		for (const std::string& adj : caves.at(current_cave))
 		{
-			paths += path_p1(nodes, node, visited);
-		}
-
-		return paths;
-	}
-
-	static int path_p2(const std::unordered_map<std::string, std::vector<std::string>>& nodes,
-		const std::string& current, bool duplicate = false, std::unordered_set<std::string> visited = {})
-	{
-		if (current == "end")
-			return 1;
-
-		if (current == "start" && visited.count(current) > 0)
-			return 0;
-
-		if (is_lower(current) && visited.count(current) > 0)
-		{
-			if (!duplicate)
+			if (!visited.contains(adj))
 			{
-				duplicate = true;
-			}
-			else
-			{
-				return 0;
-			}
-		}
+				if (is_lower(adj))
+				{
+					visited.insert(adj);
+				}
 
-		int paths = 0;
-		visited.insert(current);
-		for (const std::string& node : nodes.at(current))
-		{
-			paths += path_p2(nodes, node, duplicate, visited);
+				paths += path(caves, visited, adj, part_2);
+
+				if (is_lower(adj))
+				{
+					visited.erase(adj);
+				}
+			}
+			else if (part_2 && adj != "start")
+			{
+				paths += path(caves, visited, adj, false);
+			}
 		}
 
 		return paths;
@@ -82,14 +64,16 @@ namespace aoc
 
 	const std::string Day_12::part_1(const std::filesystem::path& input_path) const
 	{
-		std::unordered_map<std::string, std::vector<std::string>> nodes = parse_input(input_path / "day_12.txt");
-		return fmt::format("Day 12 Part 1 | Paths: {}", path_p1(nodes, "start"));
+		std::unordered_map<std::string, std::vector<std::string>> caves = parse_input(input_path / "day_12.txt");
+		std::unordered_set<std::string> visited = { "start" };
+		return fmt::format("Day 12 Part 1 | Paths: {}", path(caves, visited, "start"));
 	}
 
 	const std::string Day_12::part_2(const std::filesystem::path& input_path) const
 	{
-		std::unordered_map<std::string, std::vector<std::string>> nodes = parse_input(input_path / "day_12.txt");
-		return fmt::format("Day 12 Part 2 | Paths {}", path_p2(nodes, "start"));
+		std::unordered_map<std::string, std::vector<std::string>> caves = parse_input(input_path / "day_12.txt");
+		std::unordered_set<std::string> visited = { "start" };
+		return fmt::format("Day 12 Part 2 | Paths: {}", path(caves, visited, "start", true));
 	}
 
 } // aoc
