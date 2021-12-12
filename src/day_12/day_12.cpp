@@ -39,7 +39,7 @@ namespace aoc
 		int paths = 0;
 		for (const std::string& adj : caves.at(current_cave))
 		{
-			// Current adjacent cave is a large so we don't need to do anything special
+			// Current adjacent cave is a large cave, so we don't need to do anything special
 			if (is_upper(adj))
 			{
 				paths += path(caves, visited_small_caves, adj, part_2);
