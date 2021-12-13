@@ -72,7 +72,7 @@ namespace aoc
 		}
 	}
 
-	static std::string print(const std::unordered_set<Point>& points)
+	static std::string to_string(const std::unordered_set<Point>& points)
 	{
 		int max_x = std::numeric_limits<int>::min();
 		int max_y = std::numeric_limits<int>::min();
@@ -180,7 +180,7 @@ namespace aoc
 			}
 		}
 
-		return fmt::format("Day 13 Part 2 | Activation code:\n{}", print(points));
+		return fmt::format("Day 13 Part 2 | Activation code:\n{}", to_string(points));
 	}
 
 } // aoc
