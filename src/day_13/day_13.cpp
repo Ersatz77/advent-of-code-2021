@@ -99,25 +99,6 @@ namespace aoc
 		return output;
 	}
 
-	static std::unordered_set<Point> fold_y(const std::unordered_set<Point>& points, const int index)
-	{
-		std::unordered_set<Point> new_points;
-		for (const Point& p : points)
-		{
-			if (p.y > index)
-			{
-				int y = p.y - ((p.y - index) * 2);
-				new_points.insert(Point{ p.x, y });
-			}
-			else if (p.y < index)
-			{
-				new_points.insert(p);
-			}
-		}
-
-		return new_points;
-	}
-
 	static std::unordered_set<Point> fold_x(const std::unordered_set<Point>& points, const int index)
 	{
 		std::unordered_set<Point> new_points;
@@ -129,6 +110,25 @@ namespace aoc
 				new_points.insert(Point{ x, p.y });
 			}
 			else if (p.x < index)
+			{
+				new_points.insert(p);
+			}
+		}
+
+		return new_points;
+	}
+
+	static std::unordered_set<Point> fold_y(const std::unordered_set<Point>& points, const int index)
+	{
+		std::unordered_set<Point> new_points;
+		for (const Point& p : points)
+		{
+			if (p.y > index)
+			{
+				int y = p.y - ((p.y - index) * 2);
+				new_points.insert(Point{ p.x, y });
+			}
+			else if (p.y < index)
 			{
 				new_points.insert(p);
 			}
