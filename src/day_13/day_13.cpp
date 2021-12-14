@@ -106,7 +106,7 @@ namespace aoc
 		{
 			if (p.x > index)
 			{
-				int x = p.x - ((p.x - index) * 2);
+				int x = index - (p.x - index);
 				new_points.insert(Point{ x, p.y });
 			}
 			else if (p.x < index)
@@ -125,7 +125,7 @@ namespace aoc
 		{
 			if (p.y > index)
 			{
-				int y = p.y - ((p.y - index) * 2);
+				int y = index - (p.y - index);
 				new_points.insert(Point{ p.x, y });
 			}
 			else if (p.y < index)
