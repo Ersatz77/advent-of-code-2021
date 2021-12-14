@@ -118,7 +118,7 @@ namespace aoc
 			++iteration;
 		}
 
-		return fmt::format("Day 11 Part 1 | First iteration with a synced flash: {}", iteration);
+		return fmt::format("Day 11 Part 2 | First iteration with a synced flash: {}", iteration);
 	}
 
 } // aoc
