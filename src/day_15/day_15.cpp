@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <unordered_map>
 #include <unordered_set>
 #include <queue>
 #include <utility>
@@ -70,10 +69,11 @@ namespace aoc
 		size_t height = grid.size();
 
 		// Find shortest path using Dijkstra
-		std::unordered_map<Point, int> costs;
+		using Node = std::pair<int, Point>;
+		std::vector<Node> costs;
 		std::unordered_set<Point> visited;
-		std::priority_queue<std::pair<int, Point>, std::vector<std::pair<int, Point>>, std::greater<std::pair<int, Point>>> to_visit;
-		to_visit.push(std::make_pair(0, Point::origin));
+		std::priority_queue<Node, std::vector<Node>, std::greater<Node>> to_visit;
+		to_visit.emplace(Node{ 0, Point::origin });
 		while (!to_visit.empty())
 		{
 			int cost = to_visit.top().first;
@@ -83,21 +83,22 @@ namespace aoc
 			if (visited.contains(point))
 				continue;
 
-			visited.insert(point);
-			costs[point] = cost;
+			visited.emplace(point);
+			costs.emplace_back(Node{ cost, point });
 
 			for (const auto& adj : point.adjacent_cardinal())
 			{
 				if (adj.x >= 0 && adj.x < width && adj.y >= 0 && adj.y < height)
 				{
 					int adjacent_cost = cost + grid[adj.y][adj.x];
-					to_visit.push(std::make_pair(adjacent_cost, Point{ adj.x, adj.y }));
+					to_visit.emplace(Node{ adjacent_cost, adj });
 				}
 			}
 		}
 
-		const auto bottom_left_it = costs.find(Point{ static_cast<int>(width) - 1, static_cast<int>(height) - 1 });
-		return (bottom_left_it != costs.end()) ? bottom_left_it->second : 0;
+		const Point bottom_left = Point{ static_cast<int>(width) - 1, static_cast<int>(height) - 1 };
+		const auto bottom_left_it = std::find_if(costs.begin(), costs.end(), [&bottom_left](const auto& cost) {return cost.second == bottom_left; });
+		return (bottom_left_it != costs.end()) ? bottom_left_it->first : 0;
 	}
 
 	const std::string Day_15::part_1(const std::filesystem::path& input_path) const

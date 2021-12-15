@@ -1,6 +1,8 @@
 #ifndef AOC_2021_UTILITY_UTILITY_H
 #define AOC_2021_UTILITY_UTILITY_H
 
+#include "utility/point.h"
+
 #include <utility>
 #include <functional>
 

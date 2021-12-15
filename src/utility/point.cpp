@@ -1,5 +1,6 @@
 #include "utility/point.h"
 
+#include <iostream>
 #include <array>
 
 namespace aoc
@@ -53,6 +54,11 @@ namespace aoc
 	bool operator<(const Point& lhs, const Point& rhs)
 	{
 		return lhs.x < rhs.x || lhs.y < rhs.y;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Point& p)
+	{
+		return os << '(' << p.x << ',' << p.y << ')';
 	}
 
 } // aoc
