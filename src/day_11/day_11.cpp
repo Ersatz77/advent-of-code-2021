@@ -53,22 +53,19 @@ namespace aoc
 		// Flash points in queue
 		// More points may be added as the flashing chains
 		int num_flashes = 0;
-		constexpr std::array<int, 16> adjacent = { 1, 0, 1, -1, 0, -1, -1, -1, -1, 0, -1, 1, 0, 1, 1, 1 };
 		while (!flashes.empty())
 		{
 			Point p = flashes.front();
 			flashes.pop();
 			++num_flashes;
 
-			for (size_t i = 1; i < adjacent.size(); i += 2)
+			for (const auto& adj : p.adjacent())
 			{
-				int x = p.x + adjacent[i - 1];
-				int y = p.y + adjacent[i];
-				if (x >= 0 && y >= 0 && x < width && y < height)
+				if (adj.x >= 0 && adj.y >= 0 && adj.x < width && adj.y < height)
 				{
-					if (++grid[y][x] == 10)
+					if (++grid[adj.y][adj.x] == 10)
 					{
-						flashes.push(Point{ x, y });
+						flashes.push(Point{ adj.x, adj.y });
 					}
 				}
 			}

@@ -68,8 +68,8 @@ namespace aoc
 	int64_t score(const std::unordered_map<std::string, int64_t>& polymer, const std::pair<char, char>& end_elements)
 	{
 		std::unordered_map<char, int64_t> elements;
-		elements[end_elements.first] += 1;
-		elements[end_elements.second] += 1;
+		++elements[end_elements.first];
+		++elements[end_elements.second];
 		for (const auto& [compound, amount] : polymer)
 		{
 			elements[compound.front()] += amount;
@@ -100,7 +100,7 @@ namespace aoc
 			polymer = react(polymer, rules);
 		}
 
-		return fmt::format("Day 14 Part 1 | Min/Max element difference after 10 reactions: {}", score(polymer, end_elements));
+		return fmt::format("Day 14 Part 1 | Element difference after 10 reactions: {}", score(polymer, end_elements));
 	}
 
 	const std::string Day_14::part_2(const std::filesystem::path& input_path) const
@@ -115,7 +115,7 @@ namespace aoc
 			polymer = react(polymer, rules);
 		}
 
-		return fmt::format("Day 14 Part 2 | Min/Max element difference after 40 reactions: {}", score(polymer, end_elements));
+		return fmt::format("Day 14 Part 2 | Element difference after 40 reactions: {}", score(polymer, end_elements));
 	}
 
 } // aoc
