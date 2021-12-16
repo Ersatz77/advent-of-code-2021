@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <unordered_set>
 #include <queue>
 #include <utility>
 
@@ -71,27 +70,27 @@ namespace aoc
 		// Find shortest path using Dijkstra
 		using Node = std::pair<int, Point>;
 		std::vector<Node> costs;
-		std::unordered_set<Point> visited;
+		std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
 		std::priority_queue<Node, std::vector<Node>, std::greater<Node>> to_visit;
-		to_visit.emplace(Node{ 0, Point::origin });
+		to_visit.emplace(0, Point::origin);
 		while (!to_visit.empty())
 		{
 			int cost = to_visit.top().first;
 			Point point = to_visit.top().second;
 			to_visit.pop();
 
-			if (visited.contains(point))
+			if (visited[point.y][point.x])
 				continue;
 
-			visited.emplace(point);
-			costs.emplace_back(Node{ cost, point });
+			visited[point.y][point.x] = true;
+			costs.emplace_back(cost, point);
 
 			for (const auto& adj : point.adjacent_cardinal())
 			{
 				if (adj.x >= 0 && adj.x < width && adj.y >= 0 && adj.y < height)
 				{
 					int adjacent_cost = cost + grid[adj.y][adj.x];
-					to_visit.emplace(Node{ adjacent_cost, adj });
+					to_visit.emplace(adjacent_cost, adj);
 				}
 			}
 		}
