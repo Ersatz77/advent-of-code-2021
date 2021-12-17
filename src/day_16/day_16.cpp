@@ -35,6 +35,9 @@ namespace aoc
 		return bits;
 	}
 
+	// Forward declarations for parsing packets
+	static uint64_t read_packet(std::list<bool>& bits, uint64_t& version_sum);
+
 	// Reads 'size' amount of bits as an integer
 	static uint64_t read_int(std::list<bool>& bits, const size_t size)
 	{
@@ -73,19 +76,9 @@ namespace aoc
 		dest.splice(dest.begin(), src, src.begin(), to_it);
 	}
 
-	// Reads a packet and parses subpackets if needed
-	static uint64_t read_packet(std::list<bool>& bits, uint64_t& version_sum)
+	// Reads the subpacket length and returns the outputs from that many subpackets 
+	static std::vector<uint64_t> read_subpackets(std::list<bool>& bits, uint64_t& version_sum)
 	{
-		version_sum += read_int(bits, 3);
-		uint64_t type_id = read_int(bits, 3);
-
-		// Packet is a literal type
-		if (type_id == 4)
-		{
-			return read_dynamic_int(bits);
-		}
-
-		// Packet is an operator type, so we need to read every subpacket and collect their outputs
 		std::vector<uint64_t> outputs;
 		uint64_t length_type_id = read_int(bits, 1);
 		if (length_type_id == 0)
@@ -107,7 +100,23 @@ namespace aoc
 			}
 		}
 
-		// Operations on subpacket outputs
+		return outputs;
+	}
+
+	// Reads a packet and parses subpackets if needed
+	static uint64_t read_packet(std::list<bool>& bits, uint64_t& version_sum)
+	{
+		version_sum += read_int(bits, 3);
+		uint64_t type_id = read_int(bits, 3);
+
+		// Packet is a literal type so we don't need to do anything else
+		if (type_id == 4)
+		{
+			return read_dynamic_int(bits);
+		}
+
+		// Packet is an operator type, so we need to read every subpacket and perform operations on their outputs
+		std::vector<uint64_t> outputs = read_subpackets(bits, version_sum);
 		switch (type_id)
 		{
 		case 0:
@@ -124,9 +133,9 @@ namespace aoc
 			return (outputs[0] < outputs[1]) ? 1 : 0;
 		case 7:
 			return (outputs[0] == outputs[1]) ? 1 : 0;
-		default:
-			return 0;
 		}
+
+		return 0;
 	}
 
 	const std::string Day_16::part_1(const std::filesystem::path& input_path) const
