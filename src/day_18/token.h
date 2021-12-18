@@ -20,8 +20,6 @@ namespace aoc
 
 	bool operator==(const Token& lhs, const Token& rhs);
 
-	std::vector<Token> add_expressions(const std::vector<Token>& lhs, const std::vector<Token>& rhs);
-
 } // aoc
 
 #endif // !AOC_2021_DAY_18_TOKEN_H
