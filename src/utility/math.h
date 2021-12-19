@@ -1,6 +1,8 @@
 #ifndef AOC_2021_UTILITY_MATH_H
 #define AOC_2021_UTILITY_MATH_H
 
+#include <utility/point.h>
+
 #include <vector>
 #include <cmath>
 #include <type_traits>
@@ -13,6 +15,19 @@ namespace aoc
 	{
 		return std::abs(x1 - x2) + std::abs(y1 - y2);
 	}
+
+	// Manhattan distance between three points
+	template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>
+	T manhattan_distance(const T x1, const T x2, const T y1, const T y2, const T z1, const T z2)
+	{
+		return std::abs(x1 - x2) + std::abs(y1 - y2) + std::abs(z1 - z2);
+	}
+
+	// Manhattan distance between two points
+	int manhattan_distance_point(const Point& p1, const Point& p2);
+
+	// Manhattan distance between three points
+	int manhattan_distance_vec(const Vec& v1, const Vec& v2);
 
 	// Modular multiplicative inverse
 	template<typename T, typename = std::enable_if_t<std::is_integral_v<T>>>

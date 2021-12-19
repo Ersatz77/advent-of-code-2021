@@ -1,10 +1,28 @@
 #include "utility/point.h"
 
+#include "fmt/format.h"
+
 #include <iostream>
 #include <array>
 
 namespace aoc
 {
+	// --------------------------------------------------------------------------------
+	// Point
+	// --------------------------------------------------------------------------------
+
+	const Point Point::origin{ 0, 0 };
+	
+	std::string Point::to_string() const
+	{
+		return fmt::format("({},{})", x, y);
+	}
+
+	std::array<int, 2> Point::to_array() const
+	{
+		return { x, y };
+	}
+
 	std::array<Point, 4> Point::adjacent_cardinal() const
 	{
 		std::array<Point, 4> adjacent = {};
@@ -39,8 +57,6 @@ namespace aoc
 		return adjacent;
 	}
 
-	const Point Point::origin{ 0, 0 };
-
 	bool operator==(const Point& lhs, const Point& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y;
@@ -56,9 +72,65 @@ namespace aoc
 		return lhs.x < rhs.x || lhs.y < rhs.y;
 	}
 
+	Point operator+(const Point& lhs, const Point& rhs)
+	{
+		return Point(lhs.x + rhs.x, lhs.y + rhs.y);
+	}
+
+	Point operator-(const Point& lhs, const Point& rhs)
+	{
+		return Point(lhs.x - rhs.x, lhs.y - rhs.y);
+	}
+
 	std::ostream& operator<<(std::ostream& os, const Point& p)
 	{
-		return os << '(' << p.x << ',' << p.y << ')';
+		return os << fmt::format("({},{})", p.x, p.y);
+	}
+
+	// --------------------------------------------------------------------------------
+	// Vec
+	// --------------------------------------------------------------------------------
+
+	const Vec Vec::origin{ 0, 0, 0 };
+
+	std::string Vec::to_string() const
+	{
+		return fmt::format("({},{},{})", x, y, z);
+	}
+
+	std::array<int, 3> Vec::to_array() const
+	{
+		return { x, y, z };
+	}
+
+	bool operator==(const Vec& lhs, const Vec& rhs)
+	{
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	}
+
+	bool operator!=(const Vec& lhs, const Vec& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+	bool operator<(const Vec& lhs, const Vec& rhs)
+	{
+		return lhs.x < rhs.x || lhs.y < rhs.y || lhs.z < rhs.z;
+	}
+
+	Vec operator+(const Vec& lhs, const Vec& rhs)
+	{
+		return Vec(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+	}
+
+	Vec operator-(const Vec& lhs, const Vec& rhs)
+	{
+		return Vec(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Vec& v)
+	{
+		return os << fmt::format("({},{},{})", v.x, v.y, v.z);
 	}
 
 } // aoc
