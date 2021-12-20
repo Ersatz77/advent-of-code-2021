@@ -69,24 +69,14 @@ namespace aoc
 					{
 						int offset_x = x + offsets[i][0];
 						int offset_y = y + offsets[i][1];
-						bool has_offset = lit_pixels.contains(Point{ offset_x, offset_y });
-						bool in_grid = (offset_y >= min_y && offset_y <= max_y && offset_x >= min_x && offset_x <= max_x);
-
 						alg_offset <<= 1;
-						if (step % 2 == 0)
+						if (!(offset_y >= min_y && offset_y <= max_y && offset_x >= min_x && offset_x <= max_x) && enhancement_algorithm.front() == '#')
 						{
-							alg_offset |= has_offset ? 1ULL : 0ULL;
+							alg_offset |= (step % 2 != 0);
 						}
 						else
 						{
-							if (in_grid || enhancement_algorithm[0] == '.')
-							{
-								alg_offset |= has_offset ? 1ULL : 0ULL;
-							}
-							else
-							{
-								alg_offset |= 1ULL;
-							}
+							alg_offset |= lit_pixels.count(Point{ offset_x, offset_y });
 						}
 					}
 
