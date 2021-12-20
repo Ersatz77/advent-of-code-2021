@@ -100,7 +100,7 @@ namespace aoc
 	std::optional<Vec> Scanner::matching_direction(const std::unordered_set<Vec>& other)
 	{
 		std::unordered_map<Vec, int> distances;
-		Vec direction;
+		Vec direction = Vec::origin;
 		for (const auto& beacons_1 : other)
 		{
 			for (const auto& beacons_2 : m_beacons)
