@@ -34,6 +34,7 @@ namespace aoc
 	bool operator==(const Point& lhs, const Point& rhs);
 	bool operator!=(const Point& lhs, const Point& rhs);
 	bool operator<(const Point& lhs, const Point& rhs);
+	bool operator>(const Point& lhs, const Point& rhs);
 	Point operator+(const Point& lhs, const Point& rhs);
 	Point operator-(const Point& lhs, const Point& rhs);
 	Point operator*(const Point& lhs, const Point& rhs);
@@ -61,6 +62,7 @@ namespace aoc
 	bool operator==(const Vec& lhs, const Vec& rhs);
 	bool operator!=(const Vec& lhs, const Vec& rhs);
 	bool operator<(const Vec& lhs, const Vec& rhs);
+	bool operator>(const Vec& lhs, const Vec& rhs);
 	Vec operator+(const Vec& lhs, const Vec& rhs);
 	Vec operator-(const Vec& lhs, const Vec& rhs);
 	Vec operator*(const Vec& lhs, const Vec& rhs);

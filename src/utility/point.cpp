@@ -100,6 +100,11 @@ namespace aoc
 		return lhs.x < rhs.x || lhs.y < rhs.y;
 	}
 
+	bool operator>(const Point& lhs, const Point& rhs)
+	{
+		return lhs.x > rhs.x || lhs.y > rhs.y;
+	}
+
 	Point operator+(const Point& lhs, const Point& rhs)
 	{
 		return Point(lhs.x + rhs.x, lhs.y + rhs.y);
@@ -186,6 +191,11 @@ namespace aoc
 	bool operator<(const Vec& lhs, const Vec& rhs)
 	{
 		return lhs.x < rhs.x || lhs.y < rhs.y || lhs.z < rhs.z;
+	}
+
+	bool operator>(const Vec& lhs, const Vec& rhs)
+	{
+		return lhs.x > rhs.x || lhs.y > rhs.y || lhs.z > rhs.z;
 	}
 
 	Vec operator+(const Vec& lhs, const Vec& rhs)
