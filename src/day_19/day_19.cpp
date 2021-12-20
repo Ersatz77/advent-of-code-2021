@@ -40,7 +40,7 @@ namespace aoc
 					int z = 0;
 					std::istringstream beacon_stream(beacon_line);
 					beacon_stream >> x >> junk_ch >> y >> junk_ch >> z;
-					scanner.beacons.emplace_back(x, y, z);
+					scanner.add_beacon(Vec{ x, y, z });
 				}
 	
 				scanners.push_back(scanner);
@@ -52,8 +52,8 @@ namespace aoc
 
 	static std::pair<std::unordered_set<Vec>, std::vector<Scanner>> match_beacons(const std::vector<Scanner>& scanners)
 	{
-		const auto begin_it = scanners.front().beacons.begin();
-		const auto end_it = scanners.front().beacons.end();
+		const auto begin_it = scanners.front().beacons().begin();
+		const auto end_it = scanners.front().beacons().end();
 
 		std::unordered_set<Vec> all_beacons(begin_it, end_it);
 		std::vector<Scanner> matched_scanners;
@@ -71,15 +71,14 @@ namespace aoc
 			bool matched = false;
 			for (int i = 0; i < 6; i++)
 			{
-				current.change_axis();
+				current.rotate_axis();
 				for (int j = 0; j < 4; j++)
 				{
-					current.rotate_axis();
-					if (current.match(all_beacons))
+					current.rotate();
+					if (current.try_match(all_beacons))
 					{
 						matched = true;
-						current.align();
-						for (auto& beacon : current.beacons)
+						for (auto& beacon : current.beacons())
 						{
 							all_beacons.insert(beacon);
 						}
@@ -95,7 +94,7 @@ namespace aoc
 
 			if (!matched)
 			{
-				current.axis = 0;
+				current.reset();
 				to_match.push(current);
 			}
 		}
@@ -121,7 +120,7 @@ namespace aoc
 		{
 			for (const auto& rhs : result.second)
 			{
-				distance = std::max(distance, manhattan_distance_vec(lhs.pos, rhs.pos));
+				distance = std::max(distance, manhattan_distance_vec(lhs.position(), rhs.position()));
 			}
 		}
 

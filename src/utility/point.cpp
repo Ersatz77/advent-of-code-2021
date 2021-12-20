@@ -57,6 +57,34 @@ namespace aoc
 		return adjacent;
 	}
 
+	Point& Point::operator+=(const Point& other)
+	{
+		x += other.x;
+		y += other.y;
+		return *this;
+	}
+
+	Point& Point::operator-=(const Point& other)
+	{
+		x -= other.x;
+		y -= other.y;
+		return *this;
+	}
+
+	Point& Point::operator*=(const Point& other)
+	{
+		x *= other.x;
+		y *= other.y;
+		return *this;
+	}
+
+	Point& Point::operator/=(const Point& other)
+	{
+		x /= other.x;
+		y /= other.y;
+		return *this;
+	}
+
 	bool operator==(const Point& lhs, const Point& rhs)
 	{
 		return lhs.x == rhs.x && lhs.y == rhs.y;
@@ -82,6 +110,16 @@ namespace aoc
 		return Point(lhs.x - rhs.x, lhs.y - rhs.y);
 	}
 
+	Point operator*(const Point& lhs, const Point& rhs)
+	{
+		return Point(lhs.x * rhs.x, lhs.y * rhs.y);
+	}
+
+	Point operator/(const Point& lhs, const Point& rhs)
+	{
+		return Point(lhs.x / rhs.x, lhs.y / rhs.y);
+	}
+
 	std::ostream& operator<<(std::ostream& os, const Point& p)
 	{
 		return os << fmt::format("({},{})", p.x, p.y);
@@ -101,6 +139,38 @@ namespace aoc
 	std::array<int, 3> Vec::to_array() const
 	{
 		return { x, y, z };
+	}
+
+	Vec& Vec::operator+=(const Vec& other)
+	{
+		x += other.x;
+		y += other.y;
+		z += other.z;
+		return *this;
+	}
+
+	Vec& Vec::operator-=(const Vec& other)
+	{
+		x -= other.x;
+		y -= other.y;
+		z -= other.z;
+		return *this;
+	}
+
+	Vec& Vec::operator*=(const Vec& other)
+	{
+		x *= other.x;
+		y *= other.y;
+		z *= other.z;
+		return *this;
+	}
+
+	Vec& Vec::operator/=(const Vec& other)
+	{
+		x /= other.x;
+		y /= other.y;
+		z /= other.z;
+		return *this;
 	}
 
 	bool operator==(const Vec& lhs, const Vec& rhs)
@@ -126,6 +196,16 @@ namespace aoc
 	Vec operator-(const Vec& lhs, const Vec& rhs)
 	{
 		return Vec(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+	}
+
+	Vec operator*(const Vec& lhs, const Vec& rhs)
+	{
+		return Vec(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z);
+	}
+
+	Vec operator/(const Vec& lhs, const Vec& rhs)
+	{
+		return Vec(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Vec& v)

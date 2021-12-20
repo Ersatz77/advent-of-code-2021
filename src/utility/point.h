@@ -20,6 +20,11 @@ namespace aoc
 		std::string to_string() const;
 		std::array<int, 2> to_array() const;
 
+		Point& operator+=(const Point& other);
+		Point& operator-=(const Point& other);
+		Point& operator*=(const Point& other);
+		Point& operator/=(const Point& other);
+
 		int x;
 		int y;
 
@@ -31,6 +36,8 @@ namespace aoc
 	bool operator<(const Point& lhs, const Point& rhs);
 	Point operator+(const Point& lhs, const Point& rhs);
 	Point operator-(const Point& lhs, const Point& rhs);
+	Point operator*(const Point& lhs, const Point& rhs);
+	Point operator/(const Point& lhs, const Point& rhs);
 	std::ostream& operator<<(std::ostream& os, const Point& p);
 
 	class Vec
@@ -38,6 +45,11 @@ namespace aoc
 	public:
 		std::string to_string() const;
 		std::array<int, 3> to_array() const;
+
+		Vec& operator+=(const Vec& other);
+		Vec& operator-=(const Vec& other);
+		Vec& operator*=(const Vec& other);
+		Vec& operator/=(const Vec& other);
 
 		int x;
 		int y;
@@ -51,6 +63,8 @@ namespace aoc
 	bool operator<(const Vec& lhs, const Vec& rhs);
 	Vec operator+(const Vec& lhs, const Vec& rhs);
 	Vec operator-(const Vec& lhs, const Vec& rhs);
+	Vec operator*(const Vec& lhs, const Vec& rhs);
+	Vec operator/(const Vec& lhs, const Vec& rhs);
 	std::ostream& operator<<(std::ostream& os, const Vec& v);
 
 } // aoc
