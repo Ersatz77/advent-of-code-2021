@@ -20,11 +20,11 @@ namespace aoc
 		const Vec& position() const;
 		Vec& position();
 
-		void rotate();
 		void rotate_axis();
-		void reset();
+		void rotate();
 		bool try_match(const std::unordered_set<Vec>& other);
-
+		void reset();
+		
 	private:
 		std::optional<Vec> matching_direction(const std::unordered_set<Vec>& other);
 

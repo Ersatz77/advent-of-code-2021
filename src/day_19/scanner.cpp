@@ -41,14 +41,6 @@ namespace aoc
 		return m_pos;
 	}
 
-	void Scanner::rotate()
-	{
-		for (auto& beacon : m_beacons)
-		{
-			beacon = { -beacon.y ,beacon.x ,beacon.z };
-		}
-	}
-
 	void Scanner::rotate_axis()
 	{
 		for (auto& beacon : m_beacons)
@@ -75,9 +67,12 @@ namespace aoc
 		++m_axis;
 	}
 
-	void Scanner::reset()
+	void Scanner::rotate()
 	{
-		m_axis = 0;
+		for (auto& beacon : m_beacons)
+		{
+			beacon = { -beacon.y ,beacon.x ,beacon.z };
+		}
 	}
 
 	bool Scanner::try_match(const std::unordered_set<Vec>& other)
@@ -95,6 +90,11 @@ namespace aoc
 		}
 
 		return true;
+	}
+
+	void Scanner::reset()
+	{
+		m_axis = 0;
 	}
 
 	std::optional<Vec> Scanner::matching_direction(const std::unordered_set<Vec>& other)
