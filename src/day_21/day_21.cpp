@@ -1,6 +1,5 @@
 #include "day_21/day_21.h"
 
-#include "day_21/game.h"
 #include "day_21/dice.h"
 #include "utility/io.h"
 
@@ -12,12 +11,17 @@
 #include <algorithm>
 #include <cstdint>
 #include <string>
-#include <vector>
 #include <array>
 #include <utility>
 
 namespace aoc
 {
+	struct Player
+	{
+		int pos = 0;
+		int score = 0;
+	};
+
 	static std::pair<Player, Player> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
