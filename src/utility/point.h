@@ -1,6 +1,8 @@
 #ifndef AOC_2021_UTILITY_POINT_H
 #define AOC_2021_UTILITY_POINT_H
 
+#include "utility/utility.h"
+
 #include <iostream>
 #include <functional>
 #include <string>
@@ -78,7 +80,10 @@ namespace std
 	{
 		std::size_t operator()(const aoc::Point& p) const
 		{
-			return ((hash<int>()(p.x)) ^ (hash<int>()(p.y) << 1));
+			size_t seed = 0;
+			aoc::hash_combine(seed, p.x);
+			aoc::hash_combine(seed, p.y);
+			return seed;
 		}
 	};
 
@@ -87,7 +92,11 @@ namespace std
 	{
 		std::size_t operator()(const aoc::Vec& v) const
 		{
-			return ((hash<int>()(v.x) ^ (hash<int>()(v.y) << 1)) >> 1) ^ (hash<int>()(v.z) << 1);;
+			size_t seed = 0;
+			aoc::hash_combine(seed, v.x);
+			aoc::hash_combine(seed, v.y);
+			aoc::hash_combine(seed, v.z);
+			return seed;
 		}
 	};
 

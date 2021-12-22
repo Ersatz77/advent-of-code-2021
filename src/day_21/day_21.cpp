@@ -1,5 +1,6 @@
 #include "day_21/day_21.h"
 
+#include "day_21/game.h"
 #include "day_21/dice.h"
 #include "utility/io.h"
 
@@ -12,16 +13,11 @@
 #include <cstdint>
 #include <string>
 #include <array>
+#include <unordered_map>
 #include <utility>
 
 namespace aoc
 {
-	struct Player
-	{
-		int pos = 0;
-		int score = 0;
-	};
-
 	static std::pair<Player, Player> parse_input(const std::filesystem::path& path)
 	{
 		std::ifstream file = open_file(path);
@@ -37,34 +33,43 @@ namespace aoc
 		return std::make_pair(Player{ player_1_starting_pos, 0}, Player{player_2_starting_pos, 0});
 	}
 
-	static void play_quantum(const Player& player_1, const Player& player_2, const int8_t turn, const int64_t occurrences, int64_t& player_1_wins, int64_t& player_2_wins)
+	static std::pair<int64_t, int64_t> play_quantum(const Player& player_1, const Player& player_2, const uint8_t turn, 
+		std::unordered_map<Gamestate, std::pair<int64_t, int64_t>>& cache)
 	{
-		if (player_1.score >= 21)
+		const auto it = cache.find(Gamestate{player_1, player_2, turn});
+		if (it != cache.end())
 		{
-			player_1_wins += occurrences;
-			return;
+			return it->second;
 		}
 
-		if (player_2.score >= 21)
-		{
-			player_2_wins += occurrences;
-			return;
-		}
-		
-		constexpr std::array<std::array<int, 2>, 7> dirac_rolls = { {{3, 1}, {4, 3}, {5, 6}, {6, 7}, {7, 6}, {8, 3},{9, 1}} };
-		for (size_t i = 0; i < dirac_rolls.size(); ++i)
-		{
-			int roll = dirac_rolls[i].front();
-			int count = dirac_rolls[i].back();
+		std::pair<int64_t, int64_t> wins = { 0, 0 };
+		uint8_t player_for_next_turn = (turn == 0 ? 1 : 0);
 
+		constexpr std::array<int, 27> dirac_rolls = { 3, 4, 5, 4, 5, 6, 5, 6, 7, 4, 5, 6, 5, 6, 7, 6, 7, 8, 5, 6, 7, 6, 7, 8, 7, 8, 9 };
+		for (const int roll : dirac_rolls)
+		{
 			Player new_player_1 = player_1;
 			Player new_player_2 = player_2;
 			Player& current = (turn == 0) ? new_player_1 : new_player_2;
+			int64_t& current_wins = (turn == 0) ? wins.first : wins.second;
 			current.pos = ((current.pos + roll - 1) % 10) + 1;
 			current.score += current.pos;
 
-			play_quantum(new_player_1, new_player_2, ~turn, occurrences * count, player_1_wins, player_2_wins);
+			if (current.score >= 21)
+			{
+				++current_wins;
+			}
+			else
+			{
+				const auto [player_1_wins, player_2_wins] = play_quantum(new_player_1, new_player_2, player_for_next_turn, cache);
+				wins.first += player_1_wins;
+				wins.second += player_2_wins;
+			}
 		}
+
+		cache[Gamestate{ player_1, player_2, turn }] = wins;
+		cache[Gamestate{ player_2, player_1, player_for_next_turn }] = std::make_pair(wins.second, wins.first);
+		return wins;
 	}
 
 	const std::string Day_21::part_1(const std::filesystem::path& input_path) const
@@ -97,9 +102,8 @@ namespace aoc
 	{
 		std::pair<Player, Player> players = parse_input(input_path / "day_21.txt");
 
-		int64_t player_1_wins = 0;
-		int64_t player_2_wins = 0;
-		play_quantum(players.first, players.second, 0, 1, player_1_wins, player_2_wins);
+		std::unordered_map<Gamestate, std::pair<int64_t, int64_t>> cache;
+		const auto [player_1_wins, player_2_wins] = play_quantum(players.first, players.second, 0, cache);
 
 		return fmt::format("Day 21 Part 2 | Most wins: {}", std::max(player_1_wins, player_2_wins));
 	}
