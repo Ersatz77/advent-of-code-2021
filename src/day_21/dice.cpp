@@ -1,7 +1,5 @@
 #include "day_21/dice.h"
 
-#include <iostream>
-
 namespace aoc
 {
 	Dice::Dice() :
