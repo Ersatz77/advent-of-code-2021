@@ -27,10 +27,9 @@ namespace aoc
 		for (std::string inp_line; std::getline(file, inp_line); )
 		{
 			std::array<std::string, 17> block = {};
-			for (size_t i = 0; i < 17; ++i)
+			for (auto& b : block)
 			{
-				std::getline(file, line);
-				block[i] = line;
+				std::getline(file, b);
 			}
 
 			instruction_blocks.push_back(block);
